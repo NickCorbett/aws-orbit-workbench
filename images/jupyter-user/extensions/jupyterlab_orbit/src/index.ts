@@ -1,4 +1,6 @@
 import 'antd/dist/antd.css';
+import '../style/base.css';
+
 import {
   JupyterFrontEnd,
   JupyterFrontEndPlugin

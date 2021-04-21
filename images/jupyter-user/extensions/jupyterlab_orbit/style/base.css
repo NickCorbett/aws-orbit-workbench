@@ -1,0 +1,93 @@
+.left-widget-header {
+    margin-left: var(--jp-cell-padding);
+    color: var(--jp-content-font-color1);
+    font-size: var(--jp-ui-font-size3);
+}
+
+.grid-cell {
+    flex: 1;
+}
+
+.ant-collapse > .ant-collapse-item > .ant-collapse-header {
+    color: var(--jp-content-font-color1);
+}
+
+.listview-without-toolbar-title {
+    color: var(--jp-content-font-color1);
+}
+
+.treeview-title {
+    color: var(--jp-content-font-color1);
+}
+
+.grid-row-space-between {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.grid-row-flex-end {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.left-widget-header-divider {
+    border-top: 1px solid var(--jp-content-font-color0);
+    margin-left: var(--jp-cell-padding);
+    margin-right: var(--jp-cell-padding);
+}
+
+.small-list-item-border {
+    border-bottom: 1px solid var(--jp-border-color2);
+    border-radius: var(--jp-border-radius);
+    display: flex;
+    align-items: start;
+    margin-bottom: 8px;
+}
+
+.small-list-item-icon {
+    margin: 8px;
+}
+
+.small-list-item-content {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    margin-top: 4px;
+    min-width: 10px;
+}
+
+.small-list-item-border:hover .small-list-item-buttons {
+    display: flex;
+}
+
+.small-list-item-name-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.small-list-item-buttons {
+    display: none;
+}
+
+
+.small-list-item-name {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: var(--jp-ui-font-size1);
+    color: var(--jp-ui-font-color1);
+    font-weight: 700;
+}
+
+.small-list-item-status {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: var(--jp-ui-font-size0);
+    color: var(--jp-ui-font-color3);
+}
+
+

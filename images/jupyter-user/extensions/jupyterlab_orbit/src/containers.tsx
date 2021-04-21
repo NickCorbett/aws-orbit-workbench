@@ -12,7 +12,7 @@ import { LabIcon } from '@jupyterlab/ui-components';
 import { Menu } from '@lumino/widgets';
 
 import { containersIcon } from './common/icons';
-import { Ec2Icon, FargateIcon } from './common/reactIcons';
+import { ec2Icon, k8Icon } from './common/reactIcons';
 import { ORBIT_COLOR, RUNNING_CLASS, SECTION_CLASS } from './common/styles';
 import { CentralWidgetHeader } from './common/headers/centralWidgetHeader';
 import { LeftWidgetHeader } from './common/headers/leftWidgetHeader';
@@ -69,22 +69,22 @@ export const getStateIcon = (
   let icon: JSX.Element = <QuestionOutlined style={{ color: color }} />;
   switch (jobState) {
     case 'failed':
-      title = 'Failed!';
+      title = 'Failed';
       color = 'red';
       icon = <CloseOutlined style={{ color: color }} />;
       break;
     case 'running':
-      title = 'Running...';
+      title = 'Running';
       color = ORBIT_COLOR;
       icon = <LoadingOutlined style={{ color: color }} />;
       break;
     case 'succeeded':
-      title = 'Succeeded!';
+      title = 'Complete';
       color = 'green';
       icon = <CheckOutlined style={{ color: color }} />;
       break;
     case 'active':
-      title = 'Active!';
+      title = 'Active';
       color = 'green';
       icon = <ScheduleOutlined style={{ color: color }} />;
       break;
@@ -101,21 +101,21 @@ export const getNodeType = (
 ): {
   title: string;
   color: string;
-  icon: JSX.Element;
+  icon: LabIcon;
 } => {
   let title = 'Unknown State';
   let color = 'gray';
-  let icon: JSX.Element = <QuestionOutlined style={{ color: color }} />;
+  let icon: LabIcon;
   switch (nodeType) {
     case 'fargate':
       title = 'Fargate';
       color = 'orange';
-      icon = <FargateIcon />;
+      icon = k8Icon;
       break;
     case 'ec2':
       title = 'EC2';
       color = 'yellow';
-      icon = <Ec2Icon />;
+      icon = ec2Icon;
       break;
     default:
       console.error(`node_type: ${nodeType}`);

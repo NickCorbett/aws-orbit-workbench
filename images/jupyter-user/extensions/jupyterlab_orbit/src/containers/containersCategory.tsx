@@ -1,24 +1,19 @@
-import React from 'react';
+import React from "react";
 
-import {
-  ITEM_CLASS,
-  ITEM_DETAIL_CLASS,
-  ITEM_LABEL_CLASS,
-  SECTION_CLASS,
-  SHUTDOWN_BUTTON_CLASS
-} from '../common/styles';
+import { SECTION_CLASS } from "../common/styles";
 import {
   IUseItemsReturn,
   IItem,
   openItemCallback,
   deleteItem,
+  getNodeType,
   getStateIcon
-} from '../containers';
-import { CategoryViews } from '../common/categoryViews';
-import { Tooltip } from 'antd';
-import { ToolbarButtonComponent } from '@jupyterlab/apputils';
-import { bugIcon, closeIcon } from '@jupyterlab/ui-components';
-import { JupyterFrontEnd } from '@jupyterlab/application';
+} from "../containers";
+import { CategoryViews } from "../common/categoryViews";
+//import { ToolbarButtonComponent } from '@jupyterlab/apputils';
+//import { bugIcon, closeIcon } from '@jupyterlab/ui-components';
+import { JupyterFrontEnd } from "@jupyterlab/application";
+import { SmallListItem } from "../common/smallListItem";
 
 const Item = (props: {
   item: IItem;
@@ -26,36 +21,21 @@ const Item = (props: {
   closeItemCallback: (name: string) => void;
   connect: (container: string) => Promise<void>;
 }) => {
-  const { title, color, icon } = getStateIcon(props.item.job_state);
+  const { icon } = getNodeType(props.item.node_type);
+  const { title: statusTitle } = getStateIcon(props.item.job_state);
 
   return (
-    <Tooltip placement="topLeft" title={title} color={color} key={'Orbit'}>
-      <li className={ITEM_CLASS}>
-        <span> {icon} </span>
-        <span
-          className={ITEM_LABEL_CLASS}
-          title={props.item.hint}
-          onClick={() => props.openItemCallback(props.item.name)}
-        >
-          {props.item.name}
-        </span>
-        <span className={ITEM_DETAIL_CLASS}>{props.item.time}</span>
-        <span className={ITEM_DETAIL_CLASS}>{props.item.node_type}</span>
-        <ToolbarButtonComponent
-          className={SHUTDOWN_BUTTON_CLASS}
-          icon={bugIcon}
-          onClick={() => props.connect(props.item.name)}
-          tooltip={'Connect terminal!'}
-          enabled={props.item.job_state === 'running'}
-        />
-        <ToolbarButtonComponent
-          className={SHUTDOWN_BUTTON_CLASS}
-          icon={closeIcon}
-          onClick={() => props.closeItemCallback(props.item.name)}
-          tooltip={'Shut Down!'}
-        />
-      </li>
-    </Tooltip>
+    <li>
+      <SmallListItem
+        icon={icon}
+        name={props.item.name}
+        status={statusTitle}
+        isTerminalActive={props.item.job_state === 'running'}
+        closeItemCallback={() => props.closeItemCallback(props.item.name)}
+        openItemCallback={() => props.openItemCallback(props.item.name)}
+        connect={() => props.connect(props.item.name)}
+      />
+    </li>
   );
 };
 
@@ -64,8 +44,7 @@ const Items = (props: {
   closeItemCallback: (name: string) => void;
   connect: (container: string) => Promise<void>;
 }) => (
-  <>
-    {' '}
+  <React.Fragment>
     {props.data.map(x => (
       <Item
         item={x}
@@ -73,8 +52,8 @@ const Items = (props: {
         closeItemCallback={props.closeItemCallback}
         connect={props.connect}
       />
-    ))}{' '}
-  </>
+    ))}
+  </React.Fragment>
 );
 
 export const ContainerCategoryLeftList = (props: {

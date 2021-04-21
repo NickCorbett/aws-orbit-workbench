@@ -6,7 +6,7 @@ import {
   addIcon,
   launcherIcon
 } from '@jupyterlab/ui-components';
-import ReactJson from 'react-json-view';
+import ReactJson, { ThemeKeys } from 'react-json-view';
 import { Collapse } from 'antd';
 
 const SECTION_CLASS = 'jp-RunningSessions-section';
@@ -15,6 +15,7 @@ const CONTAINER_CLASS = 'jp-RunningSessions-sectionContainer';
 const LIST_CLASS = 'jp-RunningSessions-sectionList';
 
 const { Panel } = Collapse;
+
 function callback(key: any) {
   console.log(key);
 }
@@ -59,7 +60,12 @@ export const CategoryViews = (props: {
   );
 
   return (
-    <Collapse defaultActiveKey={['1']} onChange={callback}>
+    <Collapse
+      defaultActiveKey={['1']}
+      onChange={callback}
+      className={'collapse'}
+      ghost
+    >
       <Panel header={props.name} key={props.key} extra={genExtra()}>
         <div className={CONTAINER_CLASS}>
           <ul className={LIST_CLASS}>{props.items}</ul>
@@ -112,7 +118,7 @@ export const ListViewWithoutToolbar = (props: {
   return (
     <div className={SECTION_CLASS}>
       <header className={SECTION_HEADER_CLASS}>
-        <h2>{props.name}</h2>
+        <h2 className={'listview-without-toolbar-title'}>{props.name}</h2>
         <div style={{ display: 'flex', alignItems: 'right' }} />
       </header>
       <div className={CONTAINER_CLASS}>
@@ -127,19 +133,34 @@ export const TreeView = (props: {
   item: any;
   root_name: string;
 }) => {
+  // need to work out if we are in dark mode and set the theme of the JSON viewer
+  const style: CSSStyleDeclaration = getComputedStyle(document.body);
+  const backColour: string = style.getPropertyValue('--jp-layout-color0');
+
+  // see https://mac-s-g.github.io/react-json-view/demo/dist/ for a list of themes
+  console.log(backColour);
+  let theme: ThemeKeys = 'monokai';
+  if (backColour.toLowerCase().includes('white')) {
+    theme = 'rjv-default';
+  }
+  console.log(theme);
+
   return (
     <div className={SECTION_CLASS}>
       <header className={SECTION_HEADER_CLASS}>
-        <h2>{props.name}</h2>
+        <h2 className={'treeview-title'}>{props.name}</h2>
         <div style={{ display: 'flex', alignItems: 'right' }} />
       </header>
       <div className={CONTAINER_CLASS}>
-        <ReactJson
-          src={props.item}
-          name={props.root_name}
-          collapsed={true}
-          displayDataTypes={false}
-        />
+        <div className={'treeview-title'}>
+          <ReactJson
+            src={props.item}
+            name={props.root_name}
+            collapsed={true}
+            displayDataTypes={false}
+            theme={theme}
+          />
+        </div>
       </div>
     </div>
   );
